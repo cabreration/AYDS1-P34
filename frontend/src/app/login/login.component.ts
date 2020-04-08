@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { RestService } from '../rest.service';
 
 @Component({
   selector: 'app-login',
@@ -11,18 +10,15 @@ export class LoginComponent implements OnInit {
   cuenta = '';
   contrasenia = '';
 
-  constructor(private rest: RestService) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
-  createLoginObject(account: string, password: string): any {}
-
-  login() {
-    let user = this.createLoginObject(this.cuenta, this.contrasenia);
-    let observer = this.rest.PostRequest('/login', user).subscribe(res => {
-      
-    });
+  createLoginObject(account: string, password: string): any {
+    return { cuenta: '', contrasenia: ''};
   }
+
+  login() {}
 
 }

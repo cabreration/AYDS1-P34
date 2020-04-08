@@ -17,12 +17,12 @@ export class RestService {
 
   constructor(private httpClient: HttpClient) { }
 
-  PostRequest(serverAddress: string, info: object): Observable<any> {
+  PostRequest(serverAddress: string, info: object) {
     console.log(serverAddress);
     return this.httpClient.post<any>(httpAddress + serverAddress, info, httpOptions);
   }
 
-  GetRequest(serverAddress: string): Observable<any> {
+  GetRequest(serverAddress: string) {
     console.log(serverAddress);
     return this.httpClient.get<any>(httpAddress + serverAddress, httpOptions);
   }
