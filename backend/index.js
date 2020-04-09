@@ -14,3 +14,19 @@ app.post('/login', async(req, res)=> {
 app.post('/signup', async(req, res)=> {
     res.send({ estado: true, mensaje: 'hola mundo'});
 });
+
+app.post("/perfil", (req, res) => {
+    res.send({
+      estado: true,
+      mensaje: "post perfil",
+      result: {
+        nombre: "",
+        apellido: "",
+        dpi: -1,
+        nocuenta: "",
+        saldo: 0,
+        email: "",
+        password: ""
+      }
+    });
+});
