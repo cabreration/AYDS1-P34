@@ -7,12 +7,14 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 import { RestService } from './rest.service';
+import { CheckBalanceComponent } from './check-balance/check-balance.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    CheckBalanceComponent
   ],
   imports: [
     BrowserModule,
