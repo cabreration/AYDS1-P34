@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./check-balance.component.css']
 })
 export class CheckBalanceComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit() {
