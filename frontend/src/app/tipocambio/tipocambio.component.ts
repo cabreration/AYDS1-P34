@@ -7,10 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TipocambioComponent implements OnInit {
 
+  valor: number;
+  valores: any;
+
   constructor() {
+    this.valor = 0;
+    this.valores = [0];
   }
 
   ngOnInit() {
   }
-  
+
+  crearTipoCambio(valor: number, valores: any) {
+    this.valor = valor;
+    this.valores = valores;
+    return { valor: valor, valores: valores };
+  }
 }
