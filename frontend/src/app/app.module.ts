@@ -9,6 +9,7 @@ import { SignupComponent } from './signup/signup.component';
 import { RestService } from './rest.service';
 import { CheckBalanceComponent } from './check-balance/check-balance.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { MoneyTransferComponent } from './money-transfer/money-transfer.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { PerfilComponent } from './perfil/perfil.component';
     LoginComponent,
     SignupComponent,
     CheckBalanceComponent,
-    PerfilComponent
+    PerfilComponent,
+    MoneyTransferComponent
   ],
   imports: [
     BrowserModule,
