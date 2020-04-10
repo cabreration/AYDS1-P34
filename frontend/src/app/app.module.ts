@@ -8,13 +8,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 import { RestService } from './rest.service';
 import { PerfilComponent } from './perfil/perfil.component';
+import { TipocambioComponent } from './tipocambio/tipocambio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
-    PerfilComponent
+    PerfilComponent,
+    TipocambioComponent
   ],
   imports: [
     BrowserModule,
