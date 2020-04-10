@@ -10,7 +10,9 @@ describe('CheckBalanceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CheckBalanceComponent ]
+      declarations: [ CheckBalanceComponent ],
+      providers: [ RestService ],
+      imports: [ HttpClientModule ]
     })
     .compileComponents();
   }));
@@ -25,16 +27,17 @@ describe('CheckBalanceComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it ('no existe la cuenta', () => {
+  it ('no existe la cuenta',
     inject([RestService], async (rest: RestService) => {
       let result = await rest.PostRequest('check-balance', { cuenta: ''}).toPromise();
       expect(result.saldo).toBeDefined();
     })
-  })
-  it ('devuelve el saldo de una cuenta de prueba', () => {
+  );
+  it ('devuelve el saldo de una cuenta de prueba',
     inject([RestService], async (rest: RestService) => {
       let result = await rest.PostRequest('check-balance', { cuenta: '1'}).toPromise();
       expect(result.saldo).toBeDefined();
+      console.log(result);
     })
-  })
+  );
 });
