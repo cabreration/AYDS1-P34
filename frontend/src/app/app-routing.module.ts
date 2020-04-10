@@ -4,13 +4,15 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { CheckBalanceComponent } from './check-balance/check-balance.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { ReporteComponent } from './reporte/reporte.component';
 
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'check-balance', component: CheckBalanceComponent },
-  { path: 'perfil', component: PerfilComponent }
+  { path: 'perfil', component: PerfilComponent },
+  { path: 'reporte', component: ReporteComponent}
 ];
 
 @NgModule({
