@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SignupComponent } from './signup/signup.component';
 import { RestService } from './rest.service';
+import { CheckBalanceComponent } from './check-balance/check-balance.component';
 import { PerfilComponent } from './perfil/perfil.component';
 
 @NgModule({
@@ -14,6 +15,7 @@ import { PerfilComponent } from './perfil/perfil.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
+    CheckBalanceComponent,
     PerfilComponent
   ],
   imports: [
