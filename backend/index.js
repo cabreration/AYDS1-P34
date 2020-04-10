@@ -62,3 +62,27 @@ async function asyncForEach(array, callback) {
     await callback(array[index], index, array);
   }
 }
+
+
+app.post("/reporte", async (req, res) => {
+  let resultado;
+  if(req.body.estado===false){
+    resultado={
+        estado:false,
+        mensaje: 'NO reporte',
+        result:{}
+      }
+  }
+  else{
+    resultado={    
+      estado: true,
+      mensaje: "reporte",
+      result: {
+        transaccion1: {tipo:"retiro", monto:"100"},
+        transaccion2: {tipo:"deposito", monto:"200"},
+        transaccion3: {tipo:"retiro", monto:"300"}
+      }
+    }
+  }
+  res.send(resultado);
+});
