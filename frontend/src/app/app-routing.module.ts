@@ -10,7 +10,7 @@ import { ReporteComponent } from './reporte/reporte.component';
 const routes: Routes = [
   { path: '', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { path: 'tipocambio', component: TipocambioComponent }
+  { path: 'tipocambio', component: TipocambioComponent },
   { path: 'check-balance', component: CheckBalanceComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'reporte', component: ReporteComponent}
