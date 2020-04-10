@@ -54,7 +54,44 @@ app.post("/check-balance",async (req,res)=>{
   }catch(error){
     
   }
-  
+});
+
+app.post("/money-transfer",async (req,res)=>{
+  //res.send({result:false});
+  try{
+    const waitFor = (ms) => new Promise(r => setTimeout(r, ms));
+    //console.log(req.body);
+    if(req.body===null||req.body.cuentaOrigen===null
+      ||req.body.cuentaDestino===null
+      ||req.body.cuentaOrigen===''
+      ||req.body.cuentaDestino===''
+      ||req.body.cuentaDestino===req.body.cuentaOrigen){
+      res.send({result:false});
+    }
+    let cuentas = [{cuenta:'1',saldo: 1000},{cuenta:'2',saldo: 2000},{cuenta:'3',saldo: 3000},{cuenta:'4',saldo: 4000}];
+    var origen = false;
+    var destino = false;
+    await waitFor(100);
+    await asyncForEach(cuentas,async (element)=>{
+      await waitFor(50);
+      if(element.cuenta===req.body.cuentaOrigen){
+        if(element.saldo<req.body.monto){
+          res.send({result:false})
+        }else{
+          origen=true;
+        }
+      }
+      if(element.cuenta===req.body.cuentaDestino){
+        destino=true;
+      }
+    })
+    if(!origen||!destino){
+      res.send({result:false});
+    }
+    /**aqui se ejecutaria la operacion de suma/resta en las cuentas origen/destino */
+    res.send({result:true});
+  }catch(error){
+  }
 });
 
 async function asyncForEach(array, callback) {
