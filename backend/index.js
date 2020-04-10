@@ -34,16 +34,31 @@ app.post("/perfil", (req, res) => {
     });
 });
 
-app.post("/check-balance",(req,res)=>{
-  //console.log(req.body);
-  if(req.body===null||req.body.cuenta===null){
-    res.send({saldo:0});
-  }
-  let cuentas = [{cuenta:'1',saldo: 10},{cuenta:'2',saldo: 20},{cuenta:'3',saldo: 30},{cuenta:'4',saldo: 40}];
-  cuentas.forEach(element =>{
-    if(element.cuenta===req.body.cuenta){
-      res.send({saldo:element.saldo});
+app.post("/check-balance",async (req,res)=>{
+  try{
+    const waitFor = (ms) => new Promise(r => setTimeout(r, ms));
+    //console.log(req.body);
+    if(req.body===null||req.body.cuenta===null){
+      res.send({saldo:0});
     }
-  })
-  res.send({saldo:0});
+    let cuentas = [{cuenta:'1',saldo: 10},{cuenta:'2',saldo: 20},{cuenta:'3',saldo: 30},{cuenta:'4',saldo: 40}];
+    var result = {saldo:0};
+    await waitFor(100);
+    await asyncForEach(cuentas,async (element)=>{
+      await waitFor(50);
+      if(element.cuenta===req.body.cuenta){
+        result = {saldo:element.saldo}
+      }
+    })
+    res.send(result);
+  }catch(error){
+    
+  }
+  
 });
+
+async function asyncForEach(array, callback) {
+  for (let index = 0; index < array.length; index++) {
+    await callback(array[index], index, array);
+  }
+}
