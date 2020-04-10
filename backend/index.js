@@ -36,6 +36,9 @@ app.post("/perfil", (req, res) => {
 
 app.post("/check-balance",(req,res)=>{
   //console.log(req.body);
+  if(req.body===null||req.body.cuenta===null){
+    res.send({saldo:0});
+  }
   let cuentas = [{cuenta:'1',saldo: 10},{cuenta:'2',saldo: 20},{cuenta:'3',saldo: 30},{cuenta:'4',saldo: 40}];
   cuentas.forEach(element =>{
     if(element.cuenta===req.body.cuenta){

@@ -37,7 +37,18 @@ describe('CheckBalanceComponent', () => {
     inject([RestService], async (rest: RestService) => {
       let result = await rest.PostRequest('check-balance', { cuenta: '1'}).toPromise();
       expect(result.saldo).toBeDefined();
-      console.log(result);
+    })
+  );
+  it ('devuelve saldo 0 en caso de no enviar el numero de cuenta en la request',
+    inject([RestService], async (rest: RestService) => {
+      let result = await rest.PostRequest('check-balance', { cuenta: null}).toPromise();
+      expect(result.saldo).toBeDefined();
+    })
+  );
+  it ('devuelve saldo 0 en caso de no enviar datos',
+    inject([RestService], async (rest: RestService) => {
+      let result = await rest.PostRequest('check-balance', null).toPromise();
+      expect(result.saldo).toBeDefined();
     })
   );
 });
