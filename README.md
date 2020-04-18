@@ -13,3 +13,4 @@ practicas finales del laboratorio de AYDS1, primer semestre 2020
   6. Módulo de Tipo de Cambio
   7. Módulo de Reportes
 + [Puede encontrarse el workflow del repositorio aquí](https://app.creately.com/diagram/6XaDqOsyxKi/view) 
++ [La documentación de las pruebas unitarias se encuentra aquí](https://drive.google.com/open?id=1DOuauWFlfiyxxqfOPOuy5NJhNZK11wRXRDgeCLjSotM)
