@@ -9,6 +9,8 @@ import { SignupComponent } from './signup/signup.component';
 import { RestService } from './rest.service';
 import { CheckBalanceComponent } from './check-balance/check-balance.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { TipocambioComponent } from './tipocambio/tipocambio.component';
+import { MoneyTransferComponent } from './money-transfer/money-transfer.component';
 import { ReporteComponent } from './reporte/reporte.component';
 
 @NgModule({
@@ -16,8 +18,10 @@ import { ReporteComponent } from './reporte/reporte.component';
     AppComponent,
     LoginComponent,
     SignupComponent,
+    TipocambioComponent,
     CheckBalanceComponent,
     PerfilComponent,
+    MoneyTransferComponent,
     ReporteComponent
   ],
   imports: [

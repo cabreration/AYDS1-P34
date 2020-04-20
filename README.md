@@ -2,7 +2,6 @@
 practicas finales del laboratorio de AYDS1, primer semestre 2020
 
 ## A continuación se encuentran las convenciones que se utilizarán para las prácticas
-+ Todos los mensajes de los commits serán escritos en español
 + Se utilizará un estándar de gitflow, cada desarrollador deberá subir sus ramas de feature, bugfix, etc para dejar evidencia del uso de gitflow
 + Se utilizará un acercamiento de tipo TDD (Test Driven Development), esto quiere decir que las pruebas unitarias serán implementadas antes de la implementación del método o funcionalidad como tal.
 + Se creará un nuevo release con cada funcionalidad agregada como conjunto, es decir, las funcionalidades se crearan una a una, en el siguiente orden:
@@ -14,3 +13,4 @@ practicas finales del laboratorio de AYDS1, primer semestre 2020
   6. Módulo de Tipo de Cambio
   7. Módulo de Reportes
 + [Puede encontrarse el workflow del repositorio aquí](https://app.creately.com/diagram/6XaDqOsyxKi/view) 
++ [La documentación de las pruebas unitarias se encuentra aquí](https://drive.google.com/open?id=1DOuauWFlfiyxxqfOPOuy5NJhNZK11wRXRDgeCLjSotM)
