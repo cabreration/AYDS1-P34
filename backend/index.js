@@ -15,7 +15,7 @@ app.post('/login', async(req, res)=> {
 });
 
 app.post('/signup', async(req, res)=> {
-    res.send({ estado: true, mensaje: 'hola mundo'});
+    res.send({ estado: true, mensaje: 'hola mundo 2'});
 });
 
 app.post("/perfil", (req, res) => {
