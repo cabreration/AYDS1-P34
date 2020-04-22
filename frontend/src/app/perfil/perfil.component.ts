@@ -15,6 +15,9 @@ export class PerfilComponent implements OnInit {
   email: string;
   password: string;
 
+  passwordNuevo: string;
+  passwordConfirmar: string;
+
   constructor() {
     this.nombre = "";
     this.apellido = "";
@@ -23,9 +26,39 @@ export class PerfilComponent implements OnInit {
     this.saldo = 0;
     this.email = "";
     this.password = "";
+    this.passwordNuevo = "";
+    this.passwordConfirmar = "";
   }
 
   ngOnInit() {
+  }
+
+  changeNombre(nombre) {
+    this.nombre = nombre;
+  }
+
+  changeApellido(apellido) {
+    this.apellido = apellido;
+  }
+
+  changeDpi(dpi) {
+    this.dpi = dpi;
+  }
+
+  changePassword(password) {
+    this.password = password;
+  }
+
+  changePasswordNuevo(password) {
+    this.passwordNuevo = password;
+  }
+
+  changePasswordConfirmar(password) {
+    this.passwordConfirmar = password;
+  }
+
+  eventActualizar() {
+    /*enviar al servidor*/
   }
 
   crearPerfil(nombre: string, apellido: string, dpi: number, nocuenta: string, saldo: number, email: string, password: string) {
