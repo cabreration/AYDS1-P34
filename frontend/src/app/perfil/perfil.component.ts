@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PerfilComponent implements OnInit {
 
+  id: string;
   nombre: string;
   apellido: string;
   dpi: number;
@@ -19,6 +20,7 @@ export class PerfilComponent implements OnInit {
   passwordConfirmar: string;
 
   constructor() {
+    this.id = "";
     this.nombre = "";
     this.apellido = "";
     this.dpi = -1;
