@@ -26,20 +26,20 @@ export class SignupComponent implements OnInit {
   createSignupObject(account: string, password: string, name: string,
     lastName: string, dpi: string, balance: string, email: string): any {
     return { 
-      account: account,
-      password: password,
       name: name,
       lastName: lastName,
       dpi: dpi,
+      account: account,     
       balance: balance,
-      email: email
+      email: email,
+      password: password
     };
   }
 
   async signup() {
     if (this.checkFields()) {
       let obj = this.createSignupObject(this.account, this.password, this.name, this.lastName, this.dpi, this.balance, this.email);
-      let response = await this.rest.PostRequest('signup', obj).toPromise();
+      let response = await this.rest.PostRequest('api/userModel', obj).toPromise();
       if (response.estado) {
         this.alerta = 'Su cuenta ha sido creada';
         setTimeout(() => this.router.navigate(['']), 1500);
