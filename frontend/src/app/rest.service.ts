@@ -8,7 +8,7 @@ const httpOptions = {
   })
 };
 
-const httpAddress = 'https://practica3analisis.herokuapp.com/';
+const httpAddress = 'https://cors-anywhere.herokuapp.com/https://practica3analisis.herokuapp.com/';
 
 @Injectable({
   providedIn: 'root'
