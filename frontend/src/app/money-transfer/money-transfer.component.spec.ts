@@ -23,29 +23,21 @@ describe('MoneyTransferComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('El componente es creado', () => {
     expect(component).toBeTruthy();
   });
 
-  it ('no existe 1 o 2 de las cuentas',
+  it ('la transferencia recibe un objeto con un atributo llamado "resultado"',
     inject([RestService], async (rest: RestService) => {
-      let result = await rest.PostRequest('money-transfer', { cuentaOrigen: 'a',cuentaDestino: 'b', monto:100}).toPromise();
-      expect(result.result).toBeDefined();
+      let result = await rest.PostRequest('money-transfer', { origen: 'a' , destino: 'b', monto:100}).toPromise();
+      expect(result.resultado).toBeDefined();
       //console.log(result);
     })
   );
-  it ('el monto a transferir es mayor al monto de la cuenta de Origen',
-    inject([RestService], async (rest: RestService) => {
-      let result = await rest.PostRequest('money-transfer', { cuentaOrigen: '1',cuentaDestino: '2', monto:10000}).toPromise();
-      expect(result.result).toBeDefined();
-      //console.log(result);
-    })
-  );
-  it ('transferencia exitosa',
-    inject([RestService], async (rest: RestService) => {
-      let result = await rest.PostRequest('money-transfer', { cuentaOrigen: '1',cuentaDestino: '2', monto:100}).toPromise();
-      expect(result.result).toBeDefined();
-      //console.log(result);
-    })
-  );
+
+  it ('Si el monto a transferir es mayor al balance de la cuenta la bandera de envio es falsa', () => {
+    let flag = component.compararMontos(1000000000);
+    expect(flag).toBeFalsy();
+  });
+
 });

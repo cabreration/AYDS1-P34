@@ -139,41 +139,110 @@ app.post("/check-balance",async (req,res)=>{
 });
 
 app.post("/money-transfer",async (req,res)=>{
-  //res.send({result:false});
-  try{
-    const waitFor = (ms) => new Promise(r => setTimeout(r, ms));
-    //console.log(req.body);
-    if(req.body===null||req.body.cuentaOrigen===null
-      ||req.body.cuentaDestino===null
-      ||req.body.cuentaOrigen===''
-      ||req.body.cuentaDestino===''
-      ||req.body.cuentaDestino===req.body.cuentaOrigen){
-      res.send({result:false});
+  let origen = req.body.origen;
+  let destino = req.body.destino;
+  let cantidad = req.body.cantidad;
+  let fecha = new Date();
+
+  let docClient = new AWS.DynamoDB.DocumentClient();
+  let params = {
+    TableName: 'Usuario',
+    Key: {
+      'account': origen
     }
-    let cuentas = [{cuenta:'1',saldo: 1000},{cuenta:'2',saldo: 2000},{cuenta:'3',saldo: 3000},{cuenta:'4',saldo: 4000}];
-    var origen = false;
-    var destino = false;
-    await waitFor(100);
-    await asyncForEach(cuentas,async (element)=>{
-      await waitFor(50);
-      if(element.cuenta===req.body.cuentaOrigen){
-        if(element.saldo<req.body.monto){
-          res.send({result:false})
-        }else{
-          origen=true;
+  }
+
+  docClient.get(params, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.send({resultado: false});   
+    }
+    else {
+      let primero = data.Item;
+
+      let docClient2 = new AWS.DynamoDB.DocumentClient();
+      let params = {
+        TableName: 'Usuario', 
+        Key: {
+          'account': destino
         }
       }
-      if(element.cuenta===req.body.cuentaDestino){
-        destino=true;
-      }
-    })
-    if(!origen||!destino){
-      res.send({result:false});
+
+      docClient2.get(params, (err2, data2) => {
+        if (err2) {
+          console.log(err);
+          res.send({resultado: false});
+          return;
+        }
+        else {
+          if (Object.keys(data2).length === 0) {
+            res.send({ resultado: false });
+            return;
+          } 
+          else {
+            let segundo = data2.Item;
+            ddb.putItem({
+              TableName: 'Transferencia',
+              Item: {
+                "origen": { S: origen },
+                "destino": { S: destino },
+                "cantidad": { S: cantidad.toString(10) },
+                "fecha": { S: fecha.toString() }
+              }
+            }, (err3, data3) => {
+              if (err3) {
+                console.log(err);
+                res.send({ resultado: false});
+                return;
+              }
+              else {
+                // aqui actualizamos los valores
+                var params2 = {
+                  TableName: 'Usuario',
+                  Key: {
+                    "account": origen
+                  },
+                  UpdateExpression: "set balance = :b",
+                  ExpressionAttributeValues: {
+                    ":b": parseInt(primero.balance) - cantidad
+                  }
+                }
+
+                let docClient3 = new AWS.DynamoDB.DocumentClient();
+                docClient3.update(params2, (err4, data4) => {
+                  if (err) {
+                    res.send({resultado: false});
+                  }
+                  else {
+                    var params3 = {
+                      TableName: 'Usuario',
+                      Key: {
+                        "account": destino
+                      },
+                      UpdateExpression: "set balance = :b",
+                      ExpressionAttributeValues: {
+                        ":b": parseInt(segundo.balance) + cantidad
+                      }
+                    }
+                  }
+
+                  let docClient4 = new AWS.DynamoDB.DocumentClient();
+                  docClient4.update(params3, (err5, data5)=> {
+                    if (err) {
+                      res.send({resultado: false});
+                    }
+                    else {
+                      res.send({resultado: true});
+                    }
+                  });
+                });
+              }
+            });
+          }
+        }
+      });
     }
-    /**aqui se ejecutaria la operacion de suma/resta en las cuentas origen/destino */
-    res.send({result:true});
-  }catch(error){
-  }
+  });
 });
 
 async function asyncForEach(array, callback) {
