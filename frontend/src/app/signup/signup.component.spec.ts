@@ -33,7 +33,7 @@ describe('SignupComponent', () => {
 
   it('deberia crear un objeto con los campos "cuenta", "contrasenia", "nombre", "apellidos", "dpi", "saldo" y "correo"', () => {
     // primer test
-    let user = component.createSignupObject('4321', 'temp', 'temp', 'temp', '1235', 0, 'temp');
+    let user = component.createSignupObject('4321', 'temp', 'temp', 'temp', '1235', '', 'temp');
     expect(user.cuenta).toBeDefined();
     expect(user.contrasenia).toBeDefined();
     expect(user.nombre).toBeDefined();
@@ -43,7 +43,7 @@ describe('SignupComponent', () => {
     expect(user.correo).toBeDefined();
 
     //segundo test
-    user = component.createSignupObject('', '', '', '', '', 0, '');
+    user = component.createSignupObject('', '', '', '', '', '', '');
     expect(user.cuenta).toBeDefined();
     expect(user.contrasenia).toBeDefined();
     expect(user.nombre).toBeDefined();
@@ -53,7 +53,7 @@ describe('SignupComponent', () => {
     expect(user.correo).toBeDefined();
 
     //tercer test
-    user = component.createSignupObject(null, null, null, null, null, 0, null);
+    user = component.createSignupObject(null, null, null, null, null, '', null);
     expect(user.cuenta).toBeDefined();
     expect(user.contrasenia).toBeDefined();
     expect(user.nombre).toBeDefined();
