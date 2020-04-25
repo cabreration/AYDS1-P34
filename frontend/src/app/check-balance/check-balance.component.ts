@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 
-const REQUEST_ADDRESS = 'check-balance'
+const REQUEST_ADDRESS = '/api/userModel/check-balance'
 
 @Component({
   selector: 'app-check-balance',
