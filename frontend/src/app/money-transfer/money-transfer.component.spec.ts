@@ -36,7 +36,7 @@ describe('MoneyTransferComponent', () => {
   );
 
   it ('Si el monto a transferir es mayor al balance de la cuenta la bandera de envio es falsa', () => {
-    let flag = component.compararMontos(1000000000);
+    let flag = component.compararMontos();
     expect(flag).toBeFalsy();
   });
 
