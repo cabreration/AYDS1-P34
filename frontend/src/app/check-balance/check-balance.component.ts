@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from '../rest.service';
 
-const REQUEST_ADDRESS = '/api/userModel/check-balance'
+const REQUEST_ADDRESS = 'api/userModel/check-balance'
 
 @Component({
   selector: 'app-check-balance',
@@ -10,7 +10,7 @@ const REQUEST_ADDRESS = '/api/userModel/check-balance'
 })
 export class CheckBalanceComponent implements OnInit {
   constructor(private rest: RestService) { }
-  idUser = '1';
+  idUser = '8434';
   saldo = 0;
   ngOnInit() {
   }
@@ -20,8 +20,8 @@ export class CheckBalanceComponent implements OnInit {
       cuenta:this.idUser
     }
     let observer = this.rest.PostRequest(REQUEST_ADDRESS, balanceRequest).subscribe( res => {
-      console.log(res);
-      this.saldo = res.saldo;
+      //console.log(res);
+      this.saldo = res.saldoInicial;
 
       observer.unsubscribe();
     });
