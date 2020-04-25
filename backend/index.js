@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.post('/login', async(req, res)=> {
   let account = req.body.account;
   let password = req.body.password;
+  console.log(req.body);
   
   /* Buscamos al usuario en la base de datos */
   let usuario = ''; //aqui guardamos al encontrado
@@ -20,11 +21,12 @@ app.post('/login', async(req, res)=> {
   // en caso de que la operacion no sea exitosa
   res.send({estado: false, mensaje: 'las credenciales son incorrectas'});
   //en caso de que la operacion sea exitosa
-  res.send({ estado: true, mensaje: usuario});
+  //res.send({ estado: true, mensaje: usuario});
 });
 
 app.post('/signup', async(req, res)=> {
   let body = req.body;
+  console.log(body);
   // creamos el objeto para insertar en la bd
   
   res.send({ estado: true, mensaje: 'hola mundo 2'});

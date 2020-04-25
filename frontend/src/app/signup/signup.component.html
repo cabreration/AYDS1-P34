@@ -1,6 +1,6 @@
 <div class="divbody bg-dark">
     <div class="form-signin bg-light mx-4 my-5 rounded text-center">
-        <ngb-alert [dismissible]="true" *ngIf="alerta" type="danger" (close)="alerta = ''">{{ alerta }}</ngb-alert>
+        <div class="alert alert-danger" role="alert" *ngIf="alerta">{{ alerta }}</div>
         <h1 class="h3 mb-3 font-weight-normal">Ingresa Tus Datos</h1>
         <input [(ngModel)]="name" type="text" id="inputName" class="form-control my-2" placeholder="Nombres">
         <input [(ngModel)]="lastName" type="text" id="inputLastName" class="form-control my-2" placeholder="Apellidos">

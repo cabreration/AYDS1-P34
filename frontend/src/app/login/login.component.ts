@@ -19,12 +19,13 @@ export class LoginComponent implements OnInit {
   }
 
   createLoginObject(account: string, password: string): any {
-    return { account: '', password: '' };
+    return { account: account, password: password };
   }
 
   async login() {
     if (this.checkFields()) {
       let obj = this.createLoginObject(this.cuenta, this.contrasenia);
+      console.log(obj);
       let acceso = await this.rest.PostRequest('login', obj).toPromise();
       if (acceso.estado) {
         this.router.navigate(['perfil']);
