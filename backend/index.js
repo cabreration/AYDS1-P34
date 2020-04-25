@@ -4,6 +4,16 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 
+const aws_keys = {
+  apiVersion: '2012-08-10',
+  region: 'us-east-2',
+  endpoint: 'http://dynamodb.us-east-2.amazonaws.com'
+}
+
+let AWS = require('aws-sdk');
+AWS.config.loadFromPath('./awsConfig.json');
+const ddb = new AWS.DynamoDB(aws_keys);
+
 app.listen(3000, () => console.log('escuchando en puerto 3000'));
 
 app.use(cors());
@@ -13,23 +23,81 @@ app.use(bodyParser.json());
 app.post('/login', async(req, res)=> {
   let account = req.body.account;
   let password = req.body.password;
-  console.log(req.body);
-  
-  /* Buscamos al usuario en la base de datos */
-  let usuario = ''; //aqui guardamos al encontrado
 
-  // en caso de que la operacion no sea exitosa
-  res.send({estado: false, mensaje: 'las credenciales son incorrectas'});
-  //en caso de que la operacion sea exitosa
-  //res.send({ estado: true, mensaje: usuario});
+  let docClient = new AWS.DynamoDB.DocumentClient();
+  let params = {
+    TableName: 'Usuario',
+    Key: {
+      'account': account
+    }
+  }
+
+  docClient.get(params, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.send( { estado: false, mensaje: 'algo salio mal' } );
+    }
+    else {
+      if (Object.keys(data).length === 0 ) {
+        res.send( { estado: false, mensaje: 'no existe un usuario con ese numero de cuenta' } );
+      }
+      else {
+        if (data.Item.password != password) {
+          res.send({ estado: false, mensaje: 'la clave es incorrecta' });
+        }
+        else {
+          res.send({ estado: true, mensaje: data.Item });
+        }
+      }
+    }
+  });
 });
 
 app.post('/signup', async(req, res)=> {
   let body = req.body;
-  console.log(body);
-  // creamos el objeto para insertar en la bd
   
-  res.send({ estado: true, mensaje: 'hola mundo 2'});
+  //verificamos que no exista ya un usuario con ese numero de cuenta
+  let docClient = new AWS.DynamoDB.DocumentClient();
+  let params = {
+    TableName: 'Usuario',
+    Key: {
+      'account': body.account
+    }
+  }
+
+  docClient.get(params, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.send( { estado: false, mensaje: 'algo salio mal'} );
+    }
+    else {
+      if (Object.keys(data).length === 0) {
+        ddb.putItem({
+          TableName: 'Usuario',
+          Item: {
+            "account": { S: body.account },
+            "name": { S: body.name },
+            "lastName": { S: body.lastName },
+            "dpi": { S: body.dpi },
+            "balance": { S: body.balance.toString(10) }, 
+            "email": { S: body.email },
+            "password": { S: body.password }
+          }
+        }, (err, data1) => {
+          if (err) {
+            console.log(err);
+            res.send({ estado: false, mensaje: 'algo salio mal' });
+          }
+          else {
+            res.send({ estado: true, mensaje: 'su cuenta ha sido creada' });
+          }
+        });
+      }
+      else {
+        res.send({ estado: false, mensaje: 'ya existe un usuario con ese numero de cuenta' });
+      }
+    }
+  });
 });
 
 app.post("/perfil", (req, res) => {

@@ -10,12 +10,13 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
 
   alerta = '';
+  mensaje = '';
   account = '';
   password = '';
   name = '';
   lastName = '';
   dpi = '';
-  balance = '';
+  balance: number = 0;
   email = '';
 
   constructor(private rest: RestService, private router: Router) { }
@@ -24,7 +25,7 @@ export class SignupComponent implements OnInit {
   }
 
   createSignupObject(account: string, password: string, name: string,
-    lastName: string, dpi: string, balance: string, email: string): any {
+    lastName: string, dpi: string, balance: number, email: string): any {
     return { 
       name: name,
       lastName: lastName,
@@ -39,10 +40,11 @@ export class SignupComponent implements OnInit {
   async signup() {
     if (this.checkFields()) {
       let obj = this.createSignupObject(this.account, this.password, this.name, this.lastName, this.dpi, this.balance, this.email);
-      let response = await this.rest.PostRequest('api/userModel', obj).toPromise();
+      let response = await this.rest.PostRequest('signup', obj).toPromise();
+      console.log(response);
       if (response.estado) {
-        this.alerta = 'Su cuenta ha sido creada';
-        setTimeout(() => this.router.navigate(['']), 1500);
+        this.mensaje = 'Su cuenta ha sido creada';
+        setTimeout(() => this.router.navigate(['']), 2000);
       }
       else {
         this.alerta = response.mensaje;
@@ -74,11 +76,6 @@ export class SignupComponent implements OnInit {
     }
     else if (this.dpi === '') {
       this.alerta = 'Debe ingresar su dpi';
-      setTimeout(() => this.alerta = '', 2000);
-      return false;
-    }
-    else if (this.balance === '') {
-      this.alerta = 'Debe ingresar el balance de su cuenta';
       setTimeout(() => this.alerta = '', 2000);
       return false;
     }
