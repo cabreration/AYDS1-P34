@@ -22,7 +22,12 @@ export class MoneyTransferComponent implements OnInit {
 
   ngOnInit() {
     this.jsonUsrActual = JSON.parse(sessionStorage.getItem('user'));
-    this.noCuentaActual = this.jsonUsrActual.account;
+    if (this.jsonUsrActual === null || this.jsonUsrActual === undefined) {
+      this.noCuentaActual = -1;
+    }
+    else {
+      this.noCuentaActual = this.jsonUsrActual.account;
+    }
     console.log(this.jsonUsrActual);
   }
 
@@ -56,6 +61,8 @@ export class MoneyTransferComponent implements OnInit {
   comparation(cantidad){
     let montoATransferir = cantidad;
     let user = JSON.parse(sessionStorage.getItem('user'));
+    if (user == null)
+      return false;
     if(montoATransferir> user.balance){
       return false;
     }else return true;
