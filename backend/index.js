@@ -55,7 +55,7 @@ app.post('/login', async(req, res)=> {
 
 app.post('/signup', async(req, res)=> {
   let body = req.body;
-  
+
   //verificamos que no exista ya un usuario con ese numero de cuenta
   let docClient = new AWS.DynamoDB.DocumentClient();
   let params = {
@@ -79,7 +79,7 @@ app.post('/signup', async(req, res)=> {
             "name": { S: body.name },
             "lastName": { S: body.lastName },
             "dpi": { S: body.dpi },
-            "balance": { S: body.balance.toString(10) }, 
+            "balance": { S: body.balance.toString(10) },
             "email": { S: body.email },
             "password": { S: body.password }
           }
@@ -100,21 +100,117 @@ app.post('/signup', async(req, res)=> {
   });
 });
 
-app.post("/perfil", (req, res) => {
-    res.send({
-      estado: true,
-      mensaje: "post perfil",
-      result: {
-        nombre: "",
-        apellido: "",
-        dpi: -1,
-        nocuenta: "",
-        saldo: 0,
-        email: "",
-        password: ""
-      }
-    });
+app.post("/perfil", async (req, res) => {
+  // mostrar Datos
+  //console.log(req.body);
+
+  // obtener datos
+  const { account, name, lastName, dpi, balance, email, password, passwordNew, passwordSesion } = req.body;
+
+  // guardar password que puede o no modificarse
+  let passNuevo = (password !== "")? passwordNew: passwordSesion;
+  console.log(passNuevo);
+
+  // dynamodb cliente
+  let docClient = new AWS.DynamoDB.DocumentClient();
+
+  // parametros
+  let params = queryDynamoPerfil(account, name, lastName, dpi, balance, email, passNuevo, password);
+
+  let response = null;
+  let mensaje = "";
+  let estado = false;
+
+  try {
+    let data = await docClient.update(params).promise();
+    mensaje = "Datos actualizados";
+    estado = true;
+    response = {
+      account: account,
+      name: data.Attributes.name,
+      lastName: data.Attributes.lastName,
+      dpi: data.Attributes.dpi,
+      balance: data.Attributes.balance,
+      email: data.Attributes.email,
+      password: data.Attributes.password
+    }
+    //console.log(response);
+  }
+  catch(e) {
+    mensaje = "Datos no actualizados. Revise sus datos y vuelva a intentarlo. Si el error persiste comuniquese con un soperte tecnico";
+    estado = false;
+    console.log(e.message);
+  }
+
+  // enviando informacion
+  res.send({
+    estado: estado,
+    mensaje: mensaje,
+    result: (response !== null)? response : null
+  });
 });
+
+function queryDynamoPerfil(account, name, lastName, dpi, balance, email, passNuevo, password) {
+  let params;
+
+  if(password !== "") {
+    params = {
+      TableName: "Usuario",
+      Key: {
+        "account": account
+      },
+      UpdateExpression: "set #name = :n, #lastName = :ln, #dpi = :d, #balance = :b, #email = :e, #password = :p",
+      ExpressionAttributeNames: {
+          "#name": "name",
+          "#lastName": "lastName",
+          "#dpi": "dpi",
+          "#balance": "balance",
+          "#email": "email",
+          "#password": "password"
+      },
+      ExpressionAttributeValues: {
+        ":n": name,
+        ":ln": lastName,
+        ":d": dpi,
+        ":b": balance,
+        ":e": email,
+        ":p": passNuevo,
+        ":op": password
+      },
+      /*FilterExpression: "#password = :p",*/
+      ConditionExpression: "#password = :op",
+      ReturnValues:"UPDATED_NEW"
+    };
+  }
+  else {
+    params = {
+      TableName: "Usuario",
+      Key: {
+        "account": account
+      },
+      UpdateExpression: "set #name = :n, #lastName = :ln, #dpi = :d, #balance = :b, #email = :e, #password = :p",
+      ExpressionAttributeNames: {
+          "#name": "name",
+          "#lastName": "lastName",
+          "#dpi": "dpi",
+          "#balance": "balance",
+          "#email": "email",
+          "#password": "password"
+      },
+      ExpressionAttributeValues: {
+        ":n": name,
+        ":ln": lastName,
+        ":d": dpi,
+        ":b": balance,
+        ":e": email,
+        ":p": passNuevo
+      },
+      /*FilterExpression: "#password = :p",*/
+      ReturnValues:"UPDATED_NEW"
+    };
+  }
+  return params;
+}
 
 app.post("/check-balance",async (req,res)=>{
   try{
@@ -134,7 +230,7 @@ app.post("/check-balance",async (req,res)=>{
     })
     res.send(result);
   }catch(error){
-    
+
   }
 });
 
@@ -155,14 +251,14 @@ app.post("/money-transfer",async (req,res)=>{
   docClient.get(params, (err, data) => {
     if (err) {
       console.log(err);
-      res.send({resultado: false});   
+      res.send({resultado: false});
     }
     else {
       let primero = data.Item;
 
       let docClient2 = new AWS.DynamoDB.DocumentClient();
       let params = {
-        TableName: 'Usuario', 
+        TableName: 'Usuario',
         Key: {
           'account': destino
         }
@@ -178,7 +274,7 @@ app.post("/money-transfer",async (req,res)=>{
           if (Object.keys(data2).length === 0) {
             res.send({ resultado: false });
             return;
-          } 
+          }
           else {
             let segundo = data2.Item;
             ddb.putItem({
@@ -262,7 +358,7 @@ app.post("/reporte", async (req, res) => {
       }
   }
   else{
-    resultado={    
+    resultado={
       estado: true,
       mensaje: "reporte",
       result: {
