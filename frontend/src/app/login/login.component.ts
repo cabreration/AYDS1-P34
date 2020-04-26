@@ -19,14 +19,16 @@ export class LoginComponent implements OnInit {
   }
 
   createLoginObject(account: string, password: string): any {
-    return { account: '', password: '' };
+    return { account: account, password: password };
   }
 
   async login() {
     if (this.checkFields()) {
       let obj = this.createLoginObject(this.cuenta, this.contrasenia);
-      let acceso = await this.rest.PostRequest('api/userModel/login/', obj).toPromise();
+      let acceso = await this.rest.PostRequest('login', obj).toPromise();
       if (acceso.estado) {
+        acceso.mensaje.balance = parseInt(acceso.mensaje.balance);
+        sessionStorage.setItem('user', JSON.stringify(acceso.mensaje));
         this.router.navigate(['perfil']);
       }
       else {

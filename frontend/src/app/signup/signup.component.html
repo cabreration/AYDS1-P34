@@ -1,14 +1,15 @@
 <div class="divbody bg-dark">
     <div class="form-signin bg-light mx-4 my-5 rounded text-center">
-        <ngb-alert [dismissible]="true" *ngIf="alerta" type="danger" (close)="alerta = ''">{{ alerta }}</ngb-alert>
+        <div class="alert alert-success" role="alert" *ngIf="mensaje">{{ mensaje }}</div>
+        <div class="alert alert-danger" role="alert" *ngIf="alerta">{{ alerta }}</div>
         <h1 class="h3 mb-3 font-weight-normal">Ingresa Tus Datos</h1>
         <input [(ngModel)]="name" type="text" id="inputName" class="form-control my-2" placeholder="Nombres">
         <input [(ngModel)]="lastName" type="text" id="inputLastName" class="form-control my-2" placeholder="Apellidos">
         <input [(ngModel)]="dpi" type="text" id="inputDPI" class="form-control my-2" placeholder="DPI">
         <input [(ngModel)]="account" type="text" id="inputAccount" class="form-control my-2" placeholder="No. Cuenta">
-        <input [(ngModel)]="balance" type="text" id="inputBalance" class="form-control my-2" placeholder="Saldo de la cuenta">
+        <input [(ngModel)]="balance" type="number" id="inputBalance" class="form-control my-2" placeholder="Saldo de la cuenta">
         <input [(ngModel)]="email" type="text" id="inputEmail" class="form-control my-2" placeholder="Correo Electronico">
-        <input [(ngModel)]="password" type="text" id="inputPassword" class="form-control my-2" placeholder="Contrasenia">
+        <input [(ngModel)]="password" type="password" id="inputPassword" class="form-control my-2" placeholder="Contrasenia">
         <button class="btn btn-lg btn-primary btn-block" type="button" (click)="signup()">Completar Registro</button>
         <button class="btn btn-lg btn-dark btn-block" routerLink="">Inicia Sesión</button>
     </div>
