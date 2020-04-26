@@ -1,46 +1,56 @@
+<div class="divbody bg-dark ">
+  <div class="bg-light form-perfil rounded container my-3">
+    <h1 class="h3 mb-3 font-weight-normal text-center">Perfil</h1>
+    <div class="form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" aria-describedby="nombrehelp" placeholder="Nombre" value={{email}} (input)="changeEmail($event.target.value)">
+      </div>
 
-<div class="container my-3">
-  <div class="form">
-    <div class="form-group">
-      <label for="nombre">Nombre</label>
-      <input type="text" class="form-control" id="nombre" aria-describedby="nombrehelp" placeholder="Nombre" value={{nombre}} (input)="changeNombre($event.target.value)">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" id="nombre" aria-describedby="nombrehelp" placeholder="Nombre" value={{nombre}} (input)="changeNombre($event.target.value)">
+      </div>
+
+      <div class="form-group">
+        <label for="apellidos">Apellidos</label>
+        <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" value={{apellido}} (input)="changeApellido($event.target.value)">
+      </div>
+
+      <div class="form-group">
+        <label for="dpi">Dpi</label>
+        <input type="text" class="form-control" id="dpi" placeholder="Dpi" value={{dpi}} (input)="changeDpi($event.target.value)">
+      </div>
+
+      <div class="form-group">
+        <label for="nocuenta">No Cuenta</label>
+        <input type="text" class="form-control" id="nocuenta" placeholder="No. Cuenta" value={{nocuenta}} disabled>
+      </div>
+
+      <div class="form-group">
+        <label for="saldo">Saldo</label>
+        <input type="text" class="form-control" id="saldo" placeholder="Saldo" value={{saldo}} disabled>
+      </div>
+
+      <div class="form-group">
+        <label for="password-anterior">Password anterior</label>
+        <input type="password" class="form-control" id="password-anterior" placeholder="Password anterior" (input)="changePassword($event.target.value)">
+      </div>
+
+      <div class="form-group">
+        <label for="password-nuevo">Password nuevo</label>
+        <input type="password" class="form-control" id="password-nuevo" placeholder="Password nuevo" (input)="changePasswordNuevo($event.target.value)">
+      </div>
+
+      <div class="form-group">
+        <label for="password-confirmar">Confirmar password</label>
+        <input type="password" class="form-control" id="password-confirmar" placeholder="Confirmar Password" (input)="changePasswordConfirmar($event.target.value)">
+      </div>
+
+      <div class="alert alert-success" role="alert" *ngIf="mensaje">{{ mensaje }}</div>
+      <div class="alert alert-danger" role="alert" *ngIf="alerta">{{ alerta }}</div>
+
+      <button type="submit" class="btn btn-primary btn-block" (click)="eventActualizar()">Actualizar Datos</button>
     </div>
-
-    <div class="form-group">
-      <label for="apellidos">Apellidos</label>
-      <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" value={{apellido}} (input)="changeApellido($event.target.value)">
-    </div>
-
-    <div class="form-group">
-      <label for="dpi">Dpi</label>
-      <input type="text" class="form-control" id="dpi" placeholder="Dpi" value={{dpi}} (input)="changeDpi($event.target.value)">
-    </div>
-
-    <div class="form-group">
-      <label for="nocuenta">No Cuenta</label>
-      <input type="text" class="form-control" id="nocuenta" placeholder="No. Cuenta" value={{nocuenta}} disabled>
-    </div>
-
-    <div class="form-group">
-      <label for="saldo">Saldo</label>
-      <input type="text" class="form-control" id="saldo" placeholder="Saldo" value={{saldo}} disabled>
-    </div>
-
-    <div class="form-group">
-      <label for="password-anterior">Password anterior</label>
-      <input type="password" class="form-control" id="password-anterior" placeholder="Password anterior" (input)="changePassword($event.target.value)">
-    </div>
-
-    <div class="form-group">
-      <label for="password-nuevo">Password nuevo</label>
-      <input type="password" class="form-control" id="password-nuevo" placeholder="Password nuevo" (input)="changePasswordNuevo($event.target.value)">
-    </div>
-
-    <div class="form-group">
-      <label for="password-confirmar">Confirmar password</label>
-      <input type="password" class="form-control" id="password-confirmar" placeholder="Confirmar Password" (input)="changePasswordConfirmar($event.target.value)">
-    </div>
-
-    <button type="submit" class="btn btn-primary" (click)="eventActualizar()">Actualizar Datos</button>
   </div>
 </div>
