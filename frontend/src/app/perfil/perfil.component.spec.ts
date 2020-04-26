@@ -28,14 +28,21 @@ describe('PerfilComponent', () => {
   });
 
   it("deberia crear un objeto perfil", () => {
-    let perfil = component.crearPerfil("", "", -1, "", 0, "", "");
+    let perfil = component.crearPerfil("", "", 0, "", 0, "");
     expect(perfil.nombre).toBeDefined();
     expect(perfil.apellido).toBeDefined();
     expect(perfil.dpi).toBeDefined();
     expect(perfil.nocuenta).toBeDefined();
     expect(perfil.saldo).toBeDefined();
     expect(perfil.email).toBeDefined();
-    expect(perfil.password).toBeDefined();
+
+    perfil = component.crearPerfil(null, null, null, null, null, null);
+    expect(perfil.nombre).toBeDefined();
+    expect(perfil.apellido).toBeDefined();
+    expect(perfil.dpi).toBeDefined();
+    expect(perfil.nocuenta).toBeDefined();
+    expect(perfil.saldo).toBeDefined();
+    expect(perfil.email).toBeDefined();
   });
 
   it("deberia de estar inicializado nombre", () => {
@@ -62,57 +69,45 @@ describe('PerfilComponent', () => {
     expect(component.email).toBeDefined();
   });
 
-  it("deberia de estar inicializado password", () => {
-    expect(component.password).toBeDefined();
-  });
-
   it("deberia recibir los campos \"estado\", \"mensaje\" y \"result\"",
    inject([RestService], async (rest: RestService) => {
+     const info = {
+       account: "000000",
+       name: "test",
+       lastName: "test",
+       dpi: "0",
+       balance: "0",
+       email: "test@gmail.com",
+       password: "",
+       passwordNew: "",
+       passwordSesion: "test123"
+     }
+
      let result;
 
-     result = await rest.PostRequest("perfil", {}).toPromise();
+     result = await rest.PostRequest("perfil", info).toPromise();
      expect(result.estado).toBeDefined();
      expect(result.mensaje).toBeDefined();
-     expect(result.result).toBeDefined();
+
+     if(result.result === null) {
+       expect(result.result).toBeNull();
+     }
+     else {
+       expect(result.result).toBeDefined();
+     }
    })
-  );
+ );
 
-  it("deberia recibir el result con los valores del usuario",
-   inject([RestService], async (rest: RestService) => {
-     let result;
+ it("deberia de retornar false", () => {
+   let result = component.checkFields();
+   expect(result).toBeFalsy();
+ });
 
-     // prueba para la peticion correcta
-     result = await rest.PostRequest("perfil", {}).toPromise();
-     expect(result.estado).toBeDefined();
-     expect(result.mensaje).toBeDefined();
-     expect(result.result).toBeDefined();
-
-     expect(result.estado).toBeTruthy();
-   })
-  );
-
-  it("deberia recibir el result con los valores por defecto",
-   inject([RestService], async (rest: RestService) => {
-     let result;
-
-     // prueba para la peticion incorrecta
-     result = await rest.PostRequest("perfil", {}).toPromise();
-     expect(result.estado).toBeDefined();
-     expect(result.mensaje).toBeDefined();
-     expect(result.result).toBeDefined();
-
-     // como aun no funciona el servidor coloco "!" (aun no hay funcionalidad)
-     /******************************************************/
-     expect(!result.estado).toBeFalsy();
-
-     // validar que los valores tengan un valor por defecto
-     expect(result.result.nombre).toEqual("")
-     expect(result.result.apellido).toEqual("");
-     expect(result.result.dpi).toEqual(-1);
-     expect(result.result.nocuenta).toEqual("");
-     expect(result.result.saldo).toEqual(0);
-     expect(result.result.email).toEqual("");
-     expect(result.result.password).toEqual("");
-   })
-  );
+ it("deberia retornar true", () => {
+   component.nombre = "test";
+   component.apellido = "test";
+   component.dpi = "0";
+   component.email = "test@gmail.com";
+   let result = component.checkFields();
+ });
 });
