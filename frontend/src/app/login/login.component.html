@@ -1,1 +1,10 @@
-<p>login works!</p>
+<div class="divbody bg-dark">
+    <div class="form-signin bg-light mx-4 my-5 rounded text-center">
+        <div class="alert alert-danger" *ngIf="alerta" role="alert">{{ alerta }}</div>
+        <h1 class="h3 mb-3 font-weight-normal">Bancapp</h1>
+        <input [(ngModel)]="cuenta" type="text" id="inputName" class="form-control my-2" placeholder="Número de Cuenta">
+        <input [(ngModel)]="contrasenia" type="password" id="inputPassword" class="form-control my-2" placeholder="Contraseña">
+        <button class="btn btn-lg btn-primary btn-block" type="button" (click)="login()">Iniciar Sesión</button>
+        <button class="btn btn-lg btn-dark btn-block" routerLink="/signup">Registra tu Cuenta</button>
+    </div>
+</div>
