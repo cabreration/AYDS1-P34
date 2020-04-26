@@ -9,12 +9,16 @@ const REQUEST_ADDRESS = 'api/userModel/check-balance'
   styleUrls: ['./check-balance.component.css']
 })
 export class CheckBalanceComponent implements OnInit {
-  constructor(private rest: RestService) { }
   idUser = '8434';
   saldo = 0;
-  ngOnInit() {
+  constructor(private rest: RestService) {
+    
   }
-
+  ngOnInit() {
+    var user = JSON.parse(sessionStorage.getItem('user'));
+    this.saldo = user.balance;
+  }
+  /*
   checkBalance() {
     var balanceRequest ={
       cuenta:this.idUser
@@ -25,6 +29,6 @@ export class CheckBalanceComponent implements OnInit {
 
       observer.unsubscribe();
     });
-  }
+  }*/
 
 }
