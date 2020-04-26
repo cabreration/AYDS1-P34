@@ -53,6 +53,13 @@ export class MoneyTransferComponent implements OnInit {
       return true;
     }
   }
+  comparation(cantidad){
+    let montoATransferir = cantidad;
+    let user = JSON.parse(sessionStorage.getItem('user'));
+    if(montoATransferir> user.balance){
+      return false;
+    }else return true;
+  }
   createTransferObject(origen: number, destino: number, cantidad: number): any {
     return { origen: origen, destino: destino , cantidad:cantidad};
   }
