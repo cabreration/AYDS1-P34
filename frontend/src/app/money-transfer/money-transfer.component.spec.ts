@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { MoneyTransferComponent } from './money-transfer.component';
 import { RestService } from '../rest.service';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormsModule } from '@angular/forms';
 
 describe('MoneyTransferComponent', () => {
   let component: MoneyTransferComponent;
@@ -12,7 +14,7 @@ describe('MoneyTransferComponent', () => {
     TestBed.configureTestingModule({
       declarations: [MoneyTransferComponent],
       providers: [RestService],
-      imports: [HttpClientModule]
+      imports: [HttpClientModule, FormsModule, RouterTestingModule]
     })
       .compileComponents();
   }));
@@ -26,14 +28,8 @@ describe('MoneyTransferComponent', () => {
   it('El componente es creado', () => {
     expect(component).toBeTruthy();
   });
-  it('Debe existir el objeto usr y debe tener 5 datos', () => {
-    let obj = Object.keys(sessionStorage.getItem('usuario'));
-    var expectedKeys = ["account","balance","dpi","email","lastName","name","password"];
-    for (var i = 0; i < expectedKeys.length; i++) {
-      expect(obj).toContain(expectedKeys[i])
-    }
-  })
-  it('deberia crear un objeto con los campos "cuenta" y "contrasenia"', () => {
+
+  it('deberia crear un objeto con los campos "origen" y "destino" y "cantidad"', () => {
     // primer test
     let trans = component.createTransferObject(100,200,300);
     expect(trans.origen).toBeDefined();
@@ -52,6 +48,7 @@ describe('MoneyTransferComponent', () => {
     expect(trans.destino).toBeDefined();
     expect(trans.cantidad).toBeDefined();
   });
+
   it('la transferencia recibe un objeto con un atributo llamado "resultado"',
     inject([RestService], async (rest: RestService) => {
       let result = await rest.PostRequest('money-transfer', { origen: 'a', destino: 'b', monto: 100 }).toPromise();
