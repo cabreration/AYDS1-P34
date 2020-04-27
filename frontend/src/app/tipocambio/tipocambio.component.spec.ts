@@ -27,6 +27,18 @@ describe('TipocambioComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it("deberia de ser null el usuario", () => {
+    expect(component.usuario).toBeNull();
+  });
+
+  it("deberia de estar inicializado nocuenta", () => {
+    expect(component.nocuenta).toBeDefined();
+  });
+
+  it("deberia de estar inicializado nombre", () => {
+    expect(component.nombre).toBeDefined();
+  });
+
   it("deberia de estar inicializado tipoCambioDia", () => {
     expect(component.tipoCambioDia).toBeDefined();
   });

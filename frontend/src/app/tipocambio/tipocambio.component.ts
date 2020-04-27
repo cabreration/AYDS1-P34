@@ -9,17 +9,44 @@ import { RestService } from "../rest.service";
 
 export class TipocambioComponent implements OnInit {
 
+  usuario: any;
+
+  nocuenta: string;
+  nombre: string;
+
   tipoCambioDia: any;
   tipoCambioFechaInicial: any;
   fechaInicial: string;
 
   constructor(private rest: RestService) {
+    this.usuario = null;
+    this.nocuenta = "";
+    this.nombre = "";
+
     this.tipoCambioDia = this.crearTipoCambioDia(null, null);
     this.tipoCambioFechaInicial = this.crearTipoCambioFechaInicial(null);
     this.fechaInicial =  this.getDateNow();
+
+    // cargar variables de sesion
+    this.cargarUsuario();
   }
 
   ngOnInit() {
+  }
+
+  cargarUsuario() {
+    // obtener el usuario
+    let user = sessionStorage.getItem("user");
+
+    if(user === null) return;
+
+    // obtener el usuario json
+    let usuario = JSON.parse(user);
+
+    // asignar datos de sesion
+    this.usuario = usuario;
+    this.nocuenta = usuario.account;
+    this.nombre = usuario.name;
   }
 
   getDateNow() {
