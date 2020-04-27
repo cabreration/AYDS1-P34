@@ -45,6 +45,10 @@ describe('PerfilComponent', () => {
     expect(perfil.email).toBeDefined();
   });
 
+  it("deberia de estar con valor null usuario", () => {
+    expect(component.usuario).toBeNull();
+  });
+
   it("deberia de estar inicializado nombre", () => {
     expect(component.nombre).toBeDefined();
   });
@@ -67,6 +71,49 @@ describe('PerfilComponent', () => {
 
   it("deberia de estar inicializado email", () => {
     expect(component.email).toBeDefined();
+  });
+
+  it("deberia de estar inicializado mensaje", () => {
+    expect(component.mensaje).toBeDefined();
+  });
+
+  it("deberia de estar inicializado alerta", () => {
+    expect(component.alerta).toBeDefined();
+  });
+
+  it("deberia de cambiar el email", () => {
+    component.changeEmail("test@gmail.com");
+    expect(component.email).toEqual("test@gmail.com");
+  });
+
+  it("deberia de cambiar el nombre", () => {
+    component.changeNombre("test");
+    expect(component.nombre).toEqual("test");
+  });
+
+  it("deberia de cambiar el apellido", () => {
+    component.changeApellido("test");
+    expect(component.apellido).toEqual("test");
+  });
+
+  it("deberia de cambiar el dpi", () => {
+    component.changeDpi("0000");
+    expect(component.dpi).toEqual("0000");
+  });
+
+  it("deberia de cambiar el password", () => {
+    component.changePassword("test@gmail.com");
+    expect(component.password).toEqual("test@gmail.com");
+  });
+
+  it("deberia de cambiar el passwordNuevo", () => {
+    component.changePasswordNuevo("test@gmail.com");
+    expect(component.passwordNuevo).toEqual("test@gmail.com");
+  });
+
+  it("deberia de cambiar el passwordConfirmar", () => {
+    component.changePasswordConfirmar("test@gmail.com");
+    expect(component.passwordConfirmar).toEqual("test@gmail.com");
   });
 
   it("deberia recibir los campos \"estado\", \"mensaje\" y \"result\"",
@@ -109,5 +156,6 @@ describe('PerfilComponent', () => {
    component.dpi = "0";
    component.email = "test@gmail.com";
    let result = component.checkFields();
+   expect(result).toBeTruthy();
  });
 });

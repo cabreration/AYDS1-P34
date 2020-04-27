@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-let pageName = "http://www.banguat.gob.gt/variables/ws/TipoCambio.asmx";
-let contentType = "text/xml;charset=UTF-8;text/html, application/xhtml+xml, */*";
-let bodySoap = "\"http://www.banguat.gob.gt/variables/ws/TipoCambioDia\"";
+import { RestService } from "../rest.service";
 
 @Component({
   selector: 'app-tipocambio',
@@ -15,61 +9,98 @@ let bodySoap = "\"http://www.banguat.gob.gt/variables/ws/TipoCambioDia\"";
 
 export class TipocambioComponent implements OnInit {
 
-  valor: number;
-  valores: any;
+  tipoCambioDia: any;
+  tipoCambioFechaInicial: any;
+  fechaInicial: string;
 
-  constructor(private httpClient: HttpClient) {
-    this.valor = 0;
-    this.valores = [0];
-
-    this.requestTipoCambioDia();
+  constructor(private rest: RestService) {
+    this.tipoCambioDia = this.crearTipoCambioDia(null, null);
+    this.tipoCambioFechaInicial = this.crearTipoCambioFechaInicial(null);
+    this.fechaInicial =  this.getDateNow();
   }
 
   ngOnInit() {
   }
 
-  requestTipoCambioDia() {
-    /*let xmlRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>"+
-      "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"" +
-      "               xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"" +
-      "               xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">" +
-      "  <soap:Body>" +
-      "     <TipoCambioDia xmlns=\"http://www.banguat.gob.gt/variables/ws/\" />" +
-      "  </soap:Body>" +
-      "</soap:Envelope>";
-
-      let httpOptions = {
-        headers: new HttpHeaders({
-          "Host": "www.banguat.gob.gt",
-          "Content-Type": contentType,
-          "Content-Length": "",
-          "SOAPAction": bodySoap,
-          "Access-Control-Allow-Origin": "*"
-        })
-      };*/
-
-      /*let httpOptions = {
-        headers: new HttpHeaders({
-          "Content-Type": contentType,
-          "SOAPAction": bodySoap
-        })
-      };
-
-      this.PostRequest(xmlRequest, httpOptions).subscribe(res => {
-        console.log("en post request");
-      });*/
+  getDateNow() {
+    let nFecha = new Date();
+    return this.changeFormatUS(nFecha.toLocaleDateString());
   }
 
-
-
-  PostRequest(info, httpOptions) {
-    console.log(pageName);
-    return this.httpClient.post<any>(pageName, info, httpOptions);
+  changeFechaIncial(fecha) {
+    this.fechaInicial = fecha;
   }
 
-  crearTipoCambio(valor: number, valores: any) {
-    this.valor = valor;
-    this.valores = valores;
-    return { valor: valor, valores: valores };
+  // crea un objeto de tipoCambioDia
+  crearTipoCambioDia(fecha, valor) {
+    let fechaSistema = new Date();
+    let date = (fecha !== null)? this.changeFormatUS(fecha): this.changeFormatUS(fechaSistema.toLocaleDateString());
+    let value = (valor !== null)? valor: "0";
+    return { fecha: date, valor: value };
+  }
+
+  changeFormatUS(fecha) {
+    let arr = fecha.split('/');
+
+    let day = parseInt(arr[0]);
+    let month = parseInt(arr[1]);
+    let year = parseInt(arr[2]);
+
+    let nFecha = year + "-" + ((month < 10)? "0"+month: month) + "-" + ((day < 10)? "0"+day: day);
+    return nFecha;
+  }
+
+  changeFormatES(fecha: string) {
+    let arr = fecha.split('-');
+
+    let day = parseInt(arr[2]);
+    let month = parseInt(arr[1]);
+    let year = parseInt(arr[0]);
+
+    let nFecha = ((day < 10)? "0"+day: day) + "/" + ((month < 10)? "0"+month: month) + "/" + year;
+    return nFecha;
+  }
+
+  // crea una lista de TipoCambioFechaInicial
+  crearTipoCambioFechaInicial(arreglo) {
+    let arr = (arreglo !== null)? arreglo: [];
+    return arr;
+  }
+
+  // peticion get para tipo de cambio dia
+  async getTipoCambioDia() {
+    // peticion get
+    let res = await this.rest.GetRequest("cambiodia").toPromise();
+
+    // si se consigue datos
+    if(res.estado) {
+      // obtener el resultado
+      let varDolar = res.result;
+
+      // modificar el tipo cambio dia
+      this.tipoCambioDia = this.crearTipoCambioDia(varDolar.fecha[0], varDolar.referencia[0]);
+    }
+    else
+    {
+      this.tipoCambioDia = this.crearTipoCambioDia(null, null);
+    }
+  }
+
+  // peticion get para tipo de cambio fecha inicial
+  async getTipoCambioFechaInicial() {
+    // peticion get
+    const info = {
+      fecha: this.changeFormatES(this.fechaInicial)
+    }
+
+    let res = await this.rest.PostRequest("cambiofecha", info).toPromise();
+
+    if(res.estado) {
+      let vars = res.result;
+      this.tipoCambioFechaInicial = this.crearTipoCambioFechaInicial(vars);
+    }
+    else {
+      this.tipoCambioFechaInicial = this.crearTipoCambioFechaInicial(null);
+    }
   }
 }
