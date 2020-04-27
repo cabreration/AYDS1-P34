@@ -6,12 +6,23 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/perfil">Perfil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/money-transfer">Transferencia Monetraria</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/tipocambio">Tipo de Cambio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/check-balance">Consulta Saldo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/reporte">Reportes</a>
+          </li>
         </ul>
-        <!-- To be able to use the info within the form i need to add a name -->
-        <form class="form-inline mt-2 mt-md-0">
-          <input name="searchInput" class="form-control mr-sm-2" type="text" placeholder="Busqueda" aria-label="Search">
-          <button name="searchButton" class="btn btn-outline-success my-2 my-sm-0" type="button">Buscar</button>
-        </form>
+        
       </div>
     </nav>
 
@@ -25,10 +36,6 @@
             <p>
               <a class="lead text-muted">total Saldo:</a>
               <input type="text" class="form-control" id="editTelefono" value="{{saldo}}" disabled>
-            </p>
-            <p>
-              <a data-toggle="modal" data-target="#adminModal" class="btn btn-secondary text-light my-2 mx-1" (click)="checkBalance()">Consultar</a>
-              
             </p>
           </div>
         </section>
