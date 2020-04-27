@@ -1,1 +1,63 @@
-<p>tipocambio works!</p>
+<div class="divbody bg-dark">
+
+  <nav class="navbar navbar-dark bg-secondary">
+    <a class="navbar-brand bold">Tipo Cambio</a>
+    <h6 class="text-white bold" for="">No. Cuenta: {{ nocuenta }} Nombre: {{ nombre }}</h6>
+  </nav>
+
+  <div class="container">
+    <div class="card-deck">
+      <div class="card bg-light my-3" style="width: 18rem;">
+        <div class="card-header bold">Tipo de Cambio Fecha Inicial</div>
+        <div class="card-body">
+          <p class="card-text">Despliega la informacion del tipo de cambio, desde una fecha inicial dada hasta el dia corriente</p>
+          <div class="form my-3">
+            <div class="form-group">
+              <label for="FechaInicial">Fecha Inicial:</label>
+              <input class="form-control" id="FechaInicial" type="date" name="" (change)="changeFechaIncial($event.target.value)" value="{{ fechaInicial }}">
+            </div>
+          </div>
+        </div>
+        <div class="card-footer"><button type="submit" class="btn btn-primary my-2 btn-block" (click)="getTipoCambioFechaInicial()">Actualizar</button></div>
+      </div>
+
+      <div class="card bg-light my-3" style="width: 18rem;">
+        <div class="card-header bold">Tipo de Cambio Dia Dollar</div>
+        <div class="card-body">
+          <div class="form">
+            <div class="form-group">
+              <label for="Fecha">Fecha:</label>
+              <input class="form-control" id="Fecha" type="date" name="" value="{{ tipoCambioDia.fecha }}" disabled>
+            </div>
+            <div class="form-group">
+              <label for="Valor">Valor:</label>
+              <input class="form-control" id="Valor" type="text" name="" value="Q {{ tipoCambioDia.valor }}" disabled>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer"><button type="submit" class="btn btn-primary my-2 btn-block" (click)="getTipoCambioDia()">Actualizar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+      <div class="card-deck">
+        <div *ngFor="let info of tipoCambioFechaInicial;">
+            <div class="card bg-light my-3">
+              <div class="card-body">
+                <div class="form">
+                  <div class="form-group">
+                    <label for="Venta">Venta:</label>
+                    <input class="form-control" id="Venta" type="text" name="" value="Q {{ info.venta[0] }}" disabled>
+
+                    <label for="Compra">Compra:</label>
+                    <input class="form-control" id="Compra" type="text" name="" value="Q {{ info.compra[0] }}" disabled>
+                  </div>
+                </div>
+                <p class="card-text text-center"><small class="text-muted">{{ info.fecha[0] }}</small></p>
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>

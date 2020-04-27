@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 
 import { TipocambioComponent } from './tipocambio.component';
+import { RestService } from "../rest.service";
+import { HttpClientModule } from "@angular/common/http";
 
 describe('TipocambioComponent', () => {
   let component: TipocambioComponent;
@@ -8,7 +10,9 @@ describe('TipocambioComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TipocambioComponent ]
+      declarations: [ TipocambioComponent ],
+      providers: [ RestService ],
+      imports: [ HttpClientModule ]
     })
     .compileComponents();
   }));
@@ -23,21 +27,56 @@ describe('TipocambioComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("deberia de estar inicializado la variable valor", () => {
-    expect(component.valor).toBeDefined();
+  it("deberia de ser null el usuario", () => {
+    expect(component.usuario).toBeNull();
   });
 
-  it("deberia de estar inicializado la variable valores", () => {
-    expect(component.valores).toBeDefined();
+  it("deberia de estar inicializado nocuenta", () => {
+    expect(component.nocuenta).toBeDefined();
   });
 
-  it("valor deberia de ser mayor o igual a 0", () => {
-    expect(component.valor).toBeGreaterThanOrEqual(0);
+  it("deberia de estar inicializado nombre", () => {
+    expect(component.nombre).toBeDefined();
   });
 
-  it("los valores deberia de ser mayor o igual a 0", () => {
-    for(let i = 0; i < component.valores.length; i++) {
-      expect(component.valores[i]).toBeGreaterThanOrEqual(0);
-    }
+  it("deberia de estar inicializado tipoCambioDia", () => {
+    expect(component.tipoCambioDia).toBeDefined();
+  });
+
+  it("deberia de estar inicializado tipoCambioFechaInicial", () => {
+    expect(component.tipoCambioFechaInicial).toBeDefined();
+  });
+
+  it("deberia de estar inicializado fechaInicial", () => {
+    expect(component.fechaInicial).toBeDefined();
+  });
+
+  it("deberia de retornar la fecha de hoy", () => {
+    expect(component.getDateNow()).toBeDefined();
+  });
+
+  it("deberia de cambiar la fechaInicial", () => {
+    component.changeFechaIncial("10/10/2020");
+    expect(component.fechaInicial).toEqual("10/10/2020");
+  });
+
+  it("deberia de crear un objeto tipoCambioDia", () => {
+    let obj = component.crearTipoCambioDia(null, null);
+    expect(obj).toBeDefined();
+  });
+
+  it("deberia de cambiar el formato de la fecha a us", () => {
+    let obj = component.changeFormatUS("10/10/2020");
+    expect(obj).toEqual("2020-10-10");
+  });
+
+  it("deberia de cambiar el formato de la fecha a es", () => {
+    let obj = component.changeFormatES("2020-10-10");
+    expect(obj).toEqual("10/10/2020");
+  });
+
+  it("deberia de crear un objeto crearTipoCambioFechaInicial", () => {
+    let obj = component.crearTipoCambioFechaInicial(null);
+    expect(obj).toBeDefined();
   });
 });

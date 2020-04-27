@@ -3,6 +3,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
+const soapRequest = require('easy-soap-request');
+const xml2js = require('xml2js');
 
 const aws_keys = {
   apiVersion: '2012-08-10',
@@ -109,7 +111,7 @@ app.post("/perfil", async (req, res) => {
 
   // guardar password que puede o no modificarse
   let passNuevo = (password !== "")? passwordNew: passwordSesion;
-  console.log(passNuevo);
+  //console.log(passNuevo);
 
   // dynamodb cliente
   let docClient = new AWS.DynamoDB.DocumentClient();
@@ -134,12 +136,13 @@ app.post("/perfil", async (req, res) => {
       email: data.Attributes.email,
       password: data.Attributes.password
     }
-    //console.log(response);
+    console.log(mensaje);
   }
   catch(e) {
     mensaje = "Datos no actualizados. Revise sus datos y vuelva a intentarlo. Si el error persiste comuniquese con un soperte tecnico";
     estado = false;
     console.log(e.message);
+    console.log(mensaje);
   }
 
   // enviando informacion
@@ -147,6 +150,83 @@ app.post("/perfil", async (req, res) => {
     estado: estado,
     mensaje: mensaje,
     result: (response !== null)? response : null
+  });
+});
+
+app.get("/cambiodia", async (req, res) => {
+  let xml =
+    '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+        '<TipoCambioDia xmlns="http://www.banguat.gob.gt/variables/ws/" />' +
+      '</soap:Body>' +
+    '</soap:Envelope>';
+  let sizexml = xml.length;
+
+  const url = 'http://www.banguat.gob.gt/variables/ws/TipoCambio.asmx';
+  const sampleHeaders = {
+    'Content-Type': 'text/xml; charset=utf-8',
+    'SOAPAction': 'http://www.banguat.gob.gt/variables/ws/TipoCambioDia',
+    'Content-Length': sizexml
+  };
+
+  //console.log(sampleHeaders);
+  //console.log(xml);
+
+  const { response } = await soapRequest({ url: url, headers: sampleHeaders, xml: xml });
+  const { headers, body, statusCode } = response;
+  //console.log(headers);
+  //console.log(body);
+  //console.log(statusCode);
+  xml2js.parseString(body, (err, result) => {
+    if(err) {
+      console.log(err);
+      res.send({ estado: false, mensaje: "Upps. Algo salio mal para tener el tipo de cambio dia", result: ""});
+    }
+    else {
+      console.log("ok cambiodia");
+      res.send({ estado: true, mensaje: "", result: result['soap:Envelope']['soap:Body'][0].TipoCambioDiaResponse[0].TipoCambioDiaResult[0].CambioDolar[0].VarDolar[0]});
+    }
+  });
+});
+
+app.post("/cambiofecha", async (req, res) => {
+  const { fecha } = req.body;
+  // 20/03/2020
+  
+  let xml =
+    '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">' +
+      '<soap:Body>' +
+        '<TipoCambioFechaInicial xmlns="http://www.banguat.gob.gt/variables/ws/">' +
+          '<fechainit>' + fecha + '</fechainit>' +
+        '</TipoCambioFechaInicial>' +
+      '</soap:Body>' +
+    '</soap:Envelope>';
+  let sizexml = xml.length;
+
+  const url = 'http://www.banguat.gob.gt/variables/ws/TipoCambio.asmx';
+  const sampleHeaders = {
+    'Content-Type': 'text/xml; charset=utf-8',
+    'SOAPAction': 'http://www.banguat.gob.gt/variables/ws/TipoCambioFechaInicial',
+    'Content-Length': sizexml
+  };
+
+  //console.log(sampleHeaders);
+  //console.log(xml);
+
+  const { response } = await soapRequest({ url: url, headers: sampleHeaders, xml: xml });
+  const { headers, body, statusCode } = response;
+  //console.log(headers);
+  //console.log(body);
+  //console.log(statusCode);
+  xml2js.parseString(body, (err, result) => {
+    if(err) {
+      console.log(err);
+      res.send({ estado: false, mensaje: "Upps. Algo salio mal para tener el tipo de cambio dia", result: ""});
+    }
+    else {
+      console.log("ok cambiofecha");
+      res.send({ estado: true, mensaje: "", result: result['soap:Envelope']['soap:Body'][0].TipoCambioFechaInicialResponse[0].TipoCambioFechaInicialResult[0].Vars[0].Var});
+    }
   });
 });
 
