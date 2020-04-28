@@ -23,6 +23,7 @@ describe('TipocambioComponent', () => {
     fixture.detectChanges();
   });
 
+  // pruebas
   it('should create', () => {
     expect(component).toBeTruthy();
   });
