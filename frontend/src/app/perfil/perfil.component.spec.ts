@@ -27,58 +27,14 @@ describe('PerfilComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("deberia crear un objeto perfil", () => {
-    let perfil = component.crearPerfil("", "", 0, "", 0, "");
-    expect(perfil.nombre).toBeDefined();
-    expect(perfil.apellido).toBeDefined();
-    expect(perfil.dpi).toBeDefined();
-    expect(perfil.nocuenta).toBeDefined();
-    expect(perfil.saldo).toBeDefined();
-    expect(perfil.email).toBeDefined();
-
-    perfil = component.crearPerfil(null, null, null, null, null, null);
-    expect(perfil.nombre).toBeDefined();
-    expect(perfil.apellido).toBeDefined();
-    expect(perfil.dpi).toBeDefined();
-    expect(perfil.nocuenta).toBeDefined();
-    expect(perfil.saldo).toBeDefined();
-    expect(perfil.email).toBeDefined();
+  it("deberia de crear un objeto perfil con valores por defecto", () => {
+    let obj = component.crearPerfil(null, null, null, null, null, null);
+    expect(obj).toBeDefined();
   });
 
-  it("deberia de estar con valor null usuario", () => {
-    expect(component.usuario).toBeNull();
-  });
-
-  it("deberia de estar inicializado nombre", () => {
-    expect(component.nombre).toBeDefined();
-  });
-
-  it("deberia de estar inicializado apellido", () => {
-    expect(component.apellido).toBeDefined();
-  });
-
-  it("deberia de estar inicializado dpi", () => {
-    expect(component.dpi).toBeDefined();
-  });
-
-  it("deberia de estar inicializado nocuenta", () => {
-    expect(component.nocuenta).toBeDefined();
-  });
-
-  it("deberia de estar inicializado saldo", () => {
-    expect(component.saldo).toBeDefined();
-  });
-
-  it("deberia de estar inicializado email", () => {
-    expect(component.email).toBeDefined();
-  });
-
-  it("deberia de estar inicializado mensaje", () => {
-    expect(component.mensaje).toBeDefined();
-  });
-
-  it("deberia de estar inicializado alerta", () => {
-    expect(component.alerta).toBeDefined();
+  it("deberia de crear un objeto perfil con valores reales", () => {
+    let obj = component.crearPerfil("test", "test", "0", "201325583", "0", "");
+    expect(obj).toBeDefined();
   });
 
   it("deberia de cambiar el email", () => {
@@ -145,12 +101,7 @@ describe('PerfilComponent', () => {
    })
  );
 
- it("deberia de retornar false", () => {
-   let result = component.checkFields();
-   expect(result).toBeFalsy();
- });
-
- it("deberia retornar true", () => {
+ it("deberia retornar true checkFields", () => {
    component.nombre = "test";
    component.apellido = "test";
    component.dpi = "0";

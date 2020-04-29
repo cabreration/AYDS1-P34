@@ -27,30 +27,6 @@ describe('TipocambioComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("deberia de ser null el usuario", () => {
-    expect(component.usuario).toBeNull();
-  });
-
-  it("deberia de estar inicializado nocuenta", () => {
-    expect(component.nocuenta).toBeDefined();
-  });
-
-  it("deberia de estar inicializado nombre", () => {
-    expect(component.nombre).toBeDefined();
-  });
-
-  it("deberia de estar inicializado tipoCambioDia", () => {
-    expect(component.tipoCambioDia).toBeDefined();
-  });
-
-  it("deberia de estar inicializado tipoCambioFechaInicial", () => {
-    expect(component.tipoCambioFechaInicial).toBeDefined();
-  });
-
-  it("deberia de estar inicializado fechaInicial", () => {
-    expect(component.fechaInicial).toBeDefined();
-  });
-
   it("deberia de retornar la fecha de hoy", () => {
     expect(component.getDateNow()).toBeDefined();
   });

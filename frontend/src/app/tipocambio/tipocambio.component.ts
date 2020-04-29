@@ -27,7 +27,6 @@ export class TipocambioComponent implements OnInit {
     this.tipoCambioFechaInicial = this.crearTipoCambioFechaInicial(null);
     this.fechaInicial =  this.getDateNow();
 
-    // cargar variables de sesion
     this.cargarUsuario();
   }
 
@@ -37,6 +36,7 @@ export class TipocambioComponent implements OnInit {
   cargarUsuario() {
     // obtener el usuario
     let user = sessionStorage.getItem("user");
+    console.log(user);
 
     if(user === null) return;
 
