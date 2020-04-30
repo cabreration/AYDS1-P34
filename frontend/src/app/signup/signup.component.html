@@ -1,7 +1,7 @@
 <div class="divbody bg-dark">
     <div class="form-signin bg-light mx-4 my-5 rounded text-center">
-        <div class="alert alert-success" role="alert" *ngIf="mensaje">{{ mensaje }}</div>
-        <div class="alert alert-danger" role="alert" *ngIf="alerta">{{ alerta }}</div>
+        <div id="message" class="alert alert-success" role="alert" *ngIf="mensaje">{{ mensaje }}</div>
+        <div id="alert" class="alert alert-danger" role="alert" *ngIf="alerta">{{ alerta }}</div>
         <h1 class="h3 mb-3 font-weight-normal">Ingresa Tus Datos</h1>
         <input [(ngModel)]="name" type="text" id="inputName" class="form-control my-2" placeholder="Nombres">
         <input [(ngModel)]="lastName" type="text" id="inputLastName" class="form-control my-2" placeholder="Apellidos">
