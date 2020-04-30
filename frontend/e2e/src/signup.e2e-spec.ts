@@ -17,5 +17,5 @@ describe('vista de registro', () => {
         browser.driver.sleep(3000);
     });
 
-    //it('', () => {});
+    //it('', () => {});//
 });
