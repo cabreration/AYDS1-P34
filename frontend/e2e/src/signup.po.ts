@@ -6,12 +6,32 @@ export class SignupPage {
         return browser.get('/signup');
     }
 
-    getPasswordField() {
-        return element(by.id('inputPassword'));
+    getNameField() {
+        return element(by.id('inputName'));
+    }
+
+    getLastNameField() {
+        return element(by.id('inputLastName'));
+    }
+
+    getDPIField() {
+        return element(by.id('inputDPI'));
     }
 
     getAccountField() {
-        return element(by.id('inputName'));
+        return element(by.id('inputAccount'));
+    }
+
+    getBalanceField() {
+        return element(by.id('inputBalance'));
+    }
+
+    getEmailField() {
+        return element(by.id('inputEmail'));
+    }
+
+    getPasswordField() {
+        return element(by.id('inputPassword'));
     }
 
     getLoginButton() {
@@ -23,6 +43,10 @@ export class SignupPage {
     }
 
     getAlert() {
-        return element(by.id('notification'));
+        return element(by.id('alert'));
+    }
+
+    getMessage() {
+        return element(by.id('message'))
     }
 }
