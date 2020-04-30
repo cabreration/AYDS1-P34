@@ -29,4 +29,13 @@ describe('vista de login', () => {
         expect(browser.getCurrentUrl()).toEqual('http://localhost:4200/perfil');
         browser.driver.sleep(3000);
     });
+
+    it('deberia mostrar una advertencia si los campos no son llenados', ()=> {
+        page.navigateTo();
+
+        browser.driver.sleep(3000);
+        expect(page.getAlert().isPresent()).toBeFalsy();
+        page.getLoginButton().click();
+        browser.driver.sleep(3000);
+    });
 });

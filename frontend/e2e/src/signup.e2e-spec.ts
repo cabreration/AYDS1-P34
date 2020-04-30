@@ -12,10 +12,17 @@ describe('vista de registro', () => {
         page.navigateTo();
 
         browser.driver.sleep(3000);
-        page.getSignupButton().click();
+        page.getLoginButton().click();
         expect(browser.getCurrentUrl()).toEqual('http://localhost:4200/');
         browser.driver.sleep(3000);
     });
 
-    //it('', () => {});////
+    it('deberia mostrar una advertencia si los campos no son llenados', ()=> {
+        page.navigateTo();
+
+        browser.driver.sleep(3000);
+        expect(page.getAlert().isPresent()).toBeFalsy();
+        page.getSignupButton().click();
+        browser.driver.sleep(3000);
+    });
 });
