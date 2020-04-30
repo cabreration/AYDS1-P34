@@ -1,0 +1,7 @@
+organization=cabreration
+projectKey=cabreration_AYDS1-P34
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.7262
+dashboardUrl=https://sonarcloud.io/dashboard?id=cabreration_AYDS1-P34
+ceTaskId=AXHL7rixVHc24qBALSEw
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AXHL7rixVHc24qBALSEw
