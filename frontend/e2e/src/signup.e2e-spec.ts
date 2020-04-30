@@ -16,4 +16,6 @@ describe('vista de registro', () => {
         expect(browser.getCurrentUrl()).toEqual('http://localhost:4200/');
         browser.driver.sleep(3000);
     });
+
+    //it('', () => {});
 });
