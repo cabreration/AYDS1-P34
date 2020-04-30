@@ -41,12 +41,12 @@ export class LoginComponent implements OnInit {
   checkFields() {
     if (this.cuenta === '') {
       this.alerta = 'Debe ingresar un numero de cuenta';
-      setTimeout(() => this.alerta = '', 2000);
+      setTimeout(() => this.alerta = '', 5000);
       return false;
     }
     else if (this.contrasenia === '') {
       this.alerta = 'Debe ingresar su contrasenia';
-      setTimeout(() => this.alerta = '', 2000);
+      setTimeout(() => this.alerta = '', 5000);
       return false;
     }
 
