@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing'
 import { RestService } from "../rest.service";
 import { ReporteComponent } from './reporte.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ReporteComponent', () => {
   let component: ReporteComponent;
@@ -11,7 +12,7 @@ describe('ReporteComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ReporteComponent ],
       providers: [ RestService ],
-      imports: [ HttpClientModule ]
+      imports: [ HttpClientModule, RouterTestingModule]
     })
     .compileComponents();
   }));
@@ -26,25 +27,24 @@ describe('ReporteComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it("devuelve las transacciones de una cuenta de prueba",
+  it("deberia de recibir, del servidor, una lista de objetos",
   inject([RestService], async (rest: RestService) => {
-    let result;
-    result = await rest.PostRequest("reporte",{estado: true}).toPromise();
-    expect(result.estado).toBeDefined();
-    expect(result.mensaje).toBeDefined();
-    expect(result.result).toBeDefined();
+    let resultado;
+    // prueba para la peticion incorrecta
+    resultado = await rest.PostRequest("reporte",{noCuenta:999,estado:true}).toPromise();  
+    expect(resultado).toBeDefined();
   })
   );
 
-  it("devuelve las transacciones vacias si la cuenta no existe",
+  it("comprueba que el numero de cuenta exita",
   inject([RestService], async (rest: RestService) => {
     let result;
-    result = await rest.PostRequest("reporte",{estado: false}).toPromise();
-    expect(result.estado).toBeDefined();
-    expect(result.mensaje).toBeDefined();
-    expect(result.result).toBeDefined();
+    // prueba para la peticion incorrecta
+    result = await rest.PostRequest("reporte",{noCuenta: 0 ,estado: false}).toPromise();      
+    expect(result.resultado).toBeFalsy();
   })
   );
+
 
 });
 

@@ -428,25 +428,37 @@ async function asyncForEach(array, callback) {
 }
 
 
-app.post("/reporte", async (req, res) => {
-  let resultado;
-  if(req.body.estado===false){
-    resultado={
-        estado:false,
-        mensaje: 'NO reporte',
-        result:{}
-      }
-  }
-  else{
-    resultado={
-      estado: true,
-      mensaje: "reporte",
-      result: {
-        transaccion1: {tipo:"retiro", monto:"100"},
-        transaccion2: {tipo:"deposito", monto:"200"},
-        transaccion3: {tipo:"retiro", monto:"300"}
-      }
+app.post("/reporte", async (req, res)=>{
+  let origen = req.body.noCuenta;
+  let tipo= req.body.tipo;
+  let docClient = new AWS.DynamoDB.DocumentClient();
+  let params = {
+    TableName: 'Usuario',
+    Key: {
+      'account': origen
     }
   }
-  res.send(resultado);
+  docClient.get(params, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.send({resultado: false});
+    }
+    else {
+      let docClient = new AWS.DynamoDB.DocumentClient();
+      var params = {
+        TableName: 'Transferencia', // give it your table name          
+      };
+    docClient.scan(params,(err,data)=>{
+      if (err) {
+          console.log(err);
+          res.send({resultado: err});
+      }
+      else{
+        res.send({resultado: data.Items});
+        console.log(data.Items);
+      }
+    });
+    }
+  });
 });
+
