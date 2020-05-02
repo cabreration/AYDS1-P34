@@ -31,7 +31,7 @@ describe('vista de login', () => {
     });
 
     it('deberia mostrar una advertencia si los campos no son llenados', ()=> {
-        page.navigateTo();
+        page.navigateTo();// 
 
         //browser.driver.sleep(3000);
         expect(page.getAlert().isPresent()).toBeFalsy();
