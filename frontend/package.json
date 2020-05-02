@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test --watch=false --source-map=false",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "e2e": "ng e2e --webdriver-update=false",
     "server": "nodemon ../backend/index.js"
   },
   "private": true,
