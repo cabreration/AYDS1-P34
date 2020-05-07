@@ -23,7 +23,7 @@
         </li>
       </ul>
       <!-- To be able to use the info within the form i need to add a name -->
-      
+
     </div>
   </nav>
   <div class="bg-light form-perfil rounded container my-3">
@@ -74,10 +74,10 @@
         <input type="password" class="form-control" id="password-confirmar" placeholder="Confirmar Password" (input)="changePasswordConfirmar($event.target.value)">
       </div>
 
-      <div class="alert alert-success" role="alert" *ngIf="mensaje">{{ mensaje }}</div>
-      <div class="alert alert-danger" role="alert" *ngIf="alerta">{{ alerta }}</div>
+      <div id="mensaje" class="alert alert-success" role="alert" *ngIf="mensaje">{{ mensaje }}</div>
+      <div id="alerta" class="alert alert-danger" role="alert" *ngIf="alerta">{{ alerta }}</div>
 
-      <button type="submit" class="btn btn-primary btn-block" (click)="eventActualizar()">Actualizar Datos</button>
+      <button id="actualizar" type="submit" class="btn btn-primary btn-block" (click)="eventActualizar()">Actualizar Datos</button>
     </div>
   </div>
 </div>
