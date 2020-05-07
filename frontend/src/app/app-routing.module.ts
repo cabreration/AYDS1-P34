@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'check-balance', component: CheckBalanceComponent },
   { path: 'perfil', component: PerfilComponent },
   { path: 'reporte', component: ReporteComponent},
-  { path: 'money-transfer', component: MoneyTransferComponent}
+  { path: 'money-transfer', component: MoneyTransferComponent} //
 ];
 
 @NgModule({
