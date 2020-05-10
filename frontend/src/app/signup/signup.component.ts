@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
-
+//********************COMENTARIO 1 */
   alerta = '';
   mensaje = '';
   account = '';
@@ -18,12 +18,12 @@ export class SignupComponent implements OnInit {
   dpi = '';
   balance: number = 0;
   email = '';
-
+//********************COMENTARIO 2 */
   constructor(private rest: RestService, private router: Router) { }
 
   ngOnInit() {
   }
-
+//********************COMENTARIO 3 */
   createSignupObject(account: string, password: string, name: string,
     lastName: string, dpi: string, balance: number, email: string): any {
     return { 
@@ -36,7 +36,7 @@ export class SignupComponent implements OnInit {
       password: password
     };
   }
-
+//********************COMENTARIO 4 */
   async signup() {
     if (this.checkFields()) {
       let obj = this.createSignupObject(this.account, this.password, this.name, this.lastName, this.dpi, this.balance, this.email);
@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
       }
     }
   }
-
+//********************COMENTARIO 5 */
   checkFields() {
     if (this.account === '') {
       this.alerta = 'Debe ingresar un numero de cuenta';
@@ -68,7 +68,7 @@ export class SignupComponent implements OnInit {
       this.alerta = 'Debe ingresar su nombre';
       setTimeout(() => this.alerta = '', 2000);
       return false;
-    }
+    }//********************COMENTARIO 6
     else if (this.lastName === '') {
       this.alerta = 'Debe ingresar sus apellidos';
       setTimeout(() => this.alerta = '', 2000);
@@ -78,7 +78,7 @@ export class SignupComponent implements OnInit {
       this.alerta = 'Debe ingresar su dpi';
       setTimeout(() => this.alerta = '', 2000);
       return false;
-    }
+    }//********************COMENTARIO 7
     else if (this.email === '') {
       this.alerta = 'Debe ingresar su email';
       setTimeout(() => this.alerta = '', 2000);
@@ -88,3 +88,12 @@ export class SignupComponent implements OnInit {
     return true;
   }
 }
+//********************COMENTARIO 8 */
+//********************COMENTARIO 9 */
+//********************COMENTARIO 10 */
+//********************COMENTARIO 11 */
+//********************COMENTARIO 12 */
+//********************COMENTARIO 13 */
+//********************COMENTARIO 14 */
+//********************COMENTARIO 15 */
+
