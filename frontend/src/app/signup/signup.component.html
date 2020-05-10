@@ -2,8 +2,8 @@
     <div class="form-signin bg-light mx-4 my-5 rounded text-center">
         <div id="message" class="alert alert-success" role="alert" *ngIf="mensaje">{{ mensaje }}</div>
         <div id="alert" class="alert alert-danger" role="alert" *ngIf="alerta">{{ alerta }}</div>
-        <h1 class="h3 mb-3 font-weight-normal">Datos De Cuenta</h1>
-        <input [(ngModel)]="name" type="text" id="inputName" class="form-control my-2" placeholder="Nombres">
+        <h1 class="h3 mb-3 font-weight-normal">Ingresa Tus Datos</h1>
+        <input [(ngModel)]="name" type="text" id="inputName" class="form-control my-2" placeholder="Nombre Completo">
         <input [(ngModel)]="lastName" type="text" id="inputLastName" class="form-control my-2" placeholder="Apellidos">
         <input [(ngModel)]="dpi" type="text" id="inputDPI" class="form-control my-2" placeholder="DPI">
         <input [(ngModel)]="account" type="text" id="inputAccount" class="form-control my-2" placeholder="No. Cuenta">
